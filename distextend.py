@@ -28,12 +28,16 @@ def _splitAll(path):
 
 def findPackages(path, dataExclude=[]):
     """
-        Recursively find all packages and data files rooted at path. Note that
-        only data _directories_ and their contents are returned - non-Python
-        files at module scope are not.
+        Recursively find all packages and data directories rooted at path. Note
+        that only data _directories_ and their contents are returned -
+        non-Python files at module scope are not, and should be manually
+        included.
+        
+        dataExclude is a list of fnmatch-compatible expressions for files and
+        directories that should not be included in pakcage_data.
 
-        Excludes is a list of fnmatch-compatible expressions for files that
-        should not be included in the data directories return.
+        Returns a (packages, package_data) tuple, ready to be passed to the
+        corresponding distutils.core.setup arguments.
     """
     packages = []
     datadirs = []
@@ -52,7 +56,7 @@ def findPackages(path, dataExclude=[]):
         if not _fnmatch(i, dataExclude):
             parts = _splitAll(i)
             module = ".".join(parts[:-1])
-            acc = []
+            acc = package_data.get(module, [])
             for root, dirs, files in os.walk(i, topdown=True):
                 sub = os.path.join(*_splitAll(root)[1:])
                 if not _fnmatch(sub, dataExclude):

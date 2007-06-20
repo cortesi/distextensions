@@ -11,7 +11,10 @@ class testFindPackages(pylid.TestCase):
             d,
             {
             "testmodule": [
-                                'pkgdata/foo', 'pkgdata/falsemod/__init__.py'
+                                'pkgdata/foo',
+                                'pkgdata/falsemod/__init__.py',
+                                'pkgdata2/one/one',
+                                'pkgdata2/two/two',
                             ]
             }
         )
