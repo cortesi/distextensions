@@ -1,6 +1,8 @@
 """
-    These utility functions will usually just be copied into the setup.py file
-    for now.
+    This file would usually be placed in the top-level project directory.
+
+    The code is in the public domain, and may be used for any purpose
+    whatsoever.
 """
 
 import fnmatch, os.path

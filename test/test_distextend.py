@@ -1,6 +1,6 @@
 import pylid
-from distextensions.utils import *
-from distextensions.utils import _fnmatch, _splitAll
+from distextend import *
+from distextend import _fnmatch, _splitAll
 
 
 class testFindPackages(pylid.TestCase):
