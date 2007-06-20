@@ -1,4 +1,7 @@
-
+"""
+    These utility functions will usually just be copied into the setup.py file
+    for now.
+"""
 
 import fnmatch, os.path
 
@@ -21,7 +24,7 @@ def _splitAll(path):
     return parts
 
 
-def findPackages(path, dataExcludes=[]):
+def findPackages(path, dataExclude=[]):
     """
         Recursively find all packages and data files rooted at path. Note that
         only data _directories_ and their contents are returned - non-Python
@@ -44,16 +47,19 @@ def findPackages(path, dataExcludes=[]):
     # Now we recurse into the data directories
     package_data = {}
     for i in datadirs:
-        if not _fnmatch(i, dataExcludes):
+        if not _fnmatch(i, dataExclude):
             parts = _splitAll(i)
             module = ".".join(parts[:-1])
             acc = []
             for root, dirs, files in os.walk(i, topdown=True):
-                sub = _splitAll(root)[1:]
-                for fname in files:
-                    path = sub + [fname]
-                    path = os.path.join(*path)
-                    acc.append(path)
+                sub = os.path.join(*_splitAll(root)[1:])
+                if not _fnmatch(sub, dataExclude):
+                    for fname in files:
+                        path = os.path.join(sub, fname)
+                        if not _fnmatch(path, dataExclude):
+                            acc.append(path)
+                else:
+                    dirs[:] = []
             package_data[module] = acc
     return packages, package_data
 

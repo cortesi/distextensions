@@ -5,16 +5,19 @@ from distextensions.utils import _fnmatch, _splitAll
 
 class testFindPackages(pylid.TestCase):
     def test_testmodule(self):
-        p, d = findPackages("testmodule")
+        p, d = findPackages("testmodule", dataExclude=["*.exclude"])
         assert p == ["testmodule", "testmodule.subpackage"]
-        assert d == {
+        self.assertEqual(
+            d,
+            {
             "testmodule": [
-                'pkgdata/foo', 'pkgdata/falsemod/__init__.py'
-            ]
-        }
+                                'pkgdata/foo', 'pkgdata/falsemod/__init__.py'
+                            ]
+            }
+        )
 
     def test_emptymod(self):
-        p, d = findPackages("testmodule/pkgdata")
+        p, d = findPackages("testmodule/pkgdata", dataExclude=["*.exclude"])
         assert not p
 
 
