@@ -1,10 +1,9 @@
 """
-    This file would usually be placed in the top-level project directory.
+    The content below is included from the distextend project.
 
     The code is in the public domain, and may be used for any purpose
     whatsoever.
 """
-
 import fnmatch, os.path
 
 def _fnmatch(name, patternList):
@@ -50,7 +49,6 @@ def findPackages(path, dataExclude=[]):
             if packages:
                 datadirs.append(root)
 
-    # Now we recurse into the data directories
     package_data = {}
     for i in datadirs:
         if not _fnmatch(i, dataExclude):
